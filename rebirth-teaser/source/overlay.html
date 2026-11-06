@@ -1,0 +1,94 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"Bodoni";src:url("../fonts/bodoni400.woff2") format("woff2");font-weight:400 900;}
+:root{--gold:#8B6B14;--gold2:#B08D2E;--ivory:#FBF6EA;--bg:#F7F7F7;}
+html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hidden}
+*{box-sizing:border-box}
+.abs{position:absolute}
+.serif{font-family:"Bodoni",serif}
+.sans{font-family:"Inter",sans-serif}
+/* scene 1 */
+#s1{left:130px;top:150px;color:var(--ivory);text-shadow:0 2px 24px rgba(40,25,0,.45)}
+#s1 .rule{height:2px;background:linear-gradient(90deg,var(--gold2),rgba(176,141,46,0));width:220px;transform-origin:left}
+#s1 .kick{font-weight:600;font-size:21px;letter-spacing:.42em;margin:26px 0 22px;color:#F3E3B8}
+#s1 .t{font-size:80px;line-height:1.08;font-weight:500}
+/* scene 2 */
+#s2{right:140px;top:150px;text-align:right;color:#3A2E12}
+#s2 .num{font-weight:300;font-size:190px;line-height:.9;color:var(--gold);letter-spacing:-.01em}
+#s2 .num small{font-size:90px;font-weight:300;letter-spacing:.02em}
+#s2 .lab{font-weight:700;font-size:21px;letter-spacing:.42em;color:#6E5410;margin-top:22px}
+#s2 .rule{height:2px;width:260px;margin:30px 0 26px auto;background:linear-gradient(270deg,var(--gold2),rgba(176,141,46,0));transform-origin:right}
+#s2 .sub{font-size:60px;font-weight:500;color:#2A200C}
+#src{right:140px;top:112px;font-size:15px;letter-spacing:.22em;color:rgba(70,52,14,.85);font-weight:600}
+#scr1{left:0;top:0;width:1300px;height:700px;background:radial-gradient(ellipse 60% 55% at 28% 34%,rgba(28,18,4,.62),rgba(28,18,4,.28) 55%,rgba(28,18,4,0) 80%)}
+#scr2{right:0;top:0;width:1250px;height:760px;background:radial-gradient(ellipse 58% 55% at 72% 40%,rgba(251,246,234,.92),rgba(251,246,234,.6) 55%,rgba(251,246,234,0) 82%)}
+/* corner logo */
+#corner{right:56px;bottom:46px;width:58px;opacity:.9}
+/* end card */
+#card{inset:0;background:var(--bg)}
+#lines{inset:0}
+#crown{left:50%;top:300px;width:300px;transform:translateX(-50%)}
+#word{left:0;right:0;top:600px;text-align:center;font-weight:300;font-size:64px;letter-spacing:.55em;padding-left:.55em;color:var(--gold)}
+#tag{left:0;right:0;top:712px;text-align:center;font-size:26px;letter-spacing:.5em;padding-left:.5em;color:#5C4710}
+#tagrule{left:50%;top:690px;height:1px;width:420px;margin-left:-210px;background:linear-gradient(90deg,rgba(176,141,46,0),var(--gold2),rgba(176,141,46,0))}
+</style></head>
+<body>
+<div id="scr1" class="abs"></div><div id="scr2" class="abs"></div>
+<div id="s1" class="abs">
+  <div class="rule"></div>
+  <div class="kick sans">NOLEGGIO A LUNGO TERMINE</div>
+  <div class="t serif">Il modo di vivere l’auto<br>sta cambiando.</div>
+</div>
+<div id="s2" class="abs">
+  <div class="num sans"><span id="n">13</span> <small>MLD €</small></div>
+  <div class="lab sans">FATTURATO NLT 2025</div>
+  <div class="rule"></div>
+  <div class="sub serif">1 auto nuova su 4.</div>
+</div>
+<div id="src" class="abs sans">FONTE: 25° RAPPORTO ANIASA</div>
+<img id="corner" class="abs" src="logo.png">
+<div id="card" class="abs"></div>
+<svg id="lines" class="abs" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<img id="crown" class="abs" src="logo.png">
+<div id="tagrule" class="abs"></div>
+<div id="word" class="abs sans">REBIRTH</div>
+<div id="tag" class="abs serif">DALLA PROPRIETÀ ALL’USO</div>
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x)=>Math.max(0,Math.min(1,x));
+const ease=(x)=>{x=clamp(x);return 1-Math.pow(1-x,3)};
+const io=(t,a,b)=>ease((t-a)/(b-a));            // 0->1 between a..b
+const win=(t,a,b,c,d)=>Math.min(io(t,a,b),1-io(t,c,d)); // fade in a..b, out c..d
+// diagonal gold lines (deck motif), entering from the right
+const L=[[1920,40,980,1080],[1920,300,1240,1080],[1920,620,1500,1080],[1460,0,1920,520],[1180,0,1920,860],[1920,0,700,1080]];
+const svg=$('lines');
+L.forEach((l,i)=>{const p=document.createElementNS('http://www.w3.org/2000/svg','line');
+ p.setAttribute('x1',l[0]);p.setAttribute('y1',l[1]);p.setAttribute('x2',l[2]);p.setAttribute('y2',l[3]);
+ p.setAttribute('stroke',i%2?'#B08D2E':'#C9AE63');p.setAttribute('stroke-width',i==5?1.2:1.6);
+ const len=Math.hypot(l[2]-l[0],l[3]-l[1]);p.dataset.len=len;p.setAttribute('stroke-dasharray',len);p.id='l'+i;svg.appendChild(p);});
+window.render=(t)=>{
+  // scene 1 (0-5s)
+  const a1=win(t,0.7,1.6,4.0,4.6);
+  $('scr1').style.opacity=win(t,0.4,1.4,4.1,4.8); $('scr2').style.opacity=win(t,4.9,5.8,9.0,9.6);
+  $('s1').style.opacity=a1; $('s1').style.transform=`translateY(${(1-io(t,0.7,1.8))*24}px)`;
+  $('s1').querySelector('.rule').style.transform=`scaleX(${io(t,0.6,1.7)})`;
+  // scene 2 (5-9.6s)
+  const a2=win(t,5.2,6.0,8.9,9.5);
+  $('s2').style.opacity=a2; $('s2').style.transform=`translateY(${(1-io(t,5.2,6.2))*24}px)`;
+  $('n').textContent=Math.round(13*io(t,5.3,7.0));
+  $('s2').querySelector('.rule').style.transform=`scaleX(${io(t,6.4,7.4)})`;
+  $('s2').querySelector('.sub').style.opacity=io(t,6.9,7.7);
+  $('src').style.opacity=win(t,6.2,7.0,8.9,9.5);
+  $('corner').style.opacity=0.9*win(t,0.3,1.2,9.0,9.5);
+  // end card (9.4-15s)
+  $('card').style.opacity=io(t,9.3,10.0);
+  [...svg.children].forEach((p,i)=>{const d=io(t,9.9+i*0.12,11.4+i*0.12);p.setAttribute('stroke-dashoffset',p.dataset.len*(1-d));p.style.opacity=0.55*io(t,9.9,10.2);});
+  const c=io(t,10.4,11.6); $('crown').style.opacity=c; $('crown').style.transform=`translateX(-50%) scale(${0.94+0.06*c})`;
+  $('word').style.opacity=io(t,11.0,12.0); $('word').style.letterSpacing=(0.75-0.2*io(t,11.0,12.4))+'em';
+  $('tagrule').style.opacity=io(t,11.9,12.6); $('tagrule').style.transform=`scaleX(${io(t,11.9,12.9)})`;
+  $('tag').style.opacity=io(t,12.1,13.0);
+};
+render(0);
+</script>
+</body></html>
