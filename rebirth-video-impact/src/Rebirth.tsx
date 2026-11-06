@@ -53,17 +53,19 @@ const VO: [number, string][] = [
 ];
 
 // ---------------------------------------------------------------- pieces
-const Shot: React.FC<{shot: Shot}> = ({shot}) => {
+const XF = 0.4; // crossfade length between contiguous shots (s)
+const Shot: React.FC<{shot: Shot; lead: number; tailFade: boolean}> = ({shot, lead, tailFade}) => {
   const f = useCurrentFrame();
-  const dur = shot.to - shot.from;
+  const dur = shot.to - shot.from + lead;
   const usable = CLIP_LEN - (shot.offset ?? 0) - 0.05;
   const rate = Math.min(1, usable / dur); // slow down only when the clip is shorter than the slot
   const t = f / FPS;
   const [z0, z1] = shot.zoom ?? [1, 1];
   const z = interpolate(t, [0, dur], [z0, z1]);
-  const fade = Math.min(prog(t, 0, 0.35), 1 - prog(t, dur - 0.35, dur));
+  const fin = shot.from === 0 ? prog(t, 0, 0.8) : prog(t, 0, Math.max(lead, 0.35));
+  const fout = tailFade ? 1 - prog(t, dur - 0.35, dur) : 1;
   return (
-    <AbsoluteFill style={{opacity: shot.from === 0 ? Math.min(1, prog(t, 0, 0.8)) : fade, overflow: 'hidden', backgroundColor: '#0d0b08'}}>
+    <AbsoluteFill style={{opacity: Math.min(fin, fout), overflow: 'hidden', backgroundColor: '#0d0b08'}}>
       <OffthreadVideo
         src={staticFile(shot.src)}
         startFrom={s(shot.offset ?? 0)}
@@ -160,11 +162,11 @@ export const Rebirth: React.FC = () => {
   const VO_LEN: Record<string, number> = {'audio/vo1.mp3': 2.8, 'audio/vo2.mp3': 6.35, 'audio/vo3.mp3': 6.45, 'audio/vo4.mp3': 2.95, 'audio/vo5.mp3': 8.45, 'audio/vo6.mp3': 3.65, 'audio/vo8.mp3': 1.15};
   const musicVolume = (f: number) => {
     const tt = f / fps;
-    const base = interpolate(tt, [0, 1.2, TOTAL - 4.5, TOTAL - 0.2], [0, 0.6, 0.6, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+    const base = interpolate(tt, [0, 1.2, TOTAL - 4.5, TOTAL - 0.2], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
     let duck = 1;
     for (const [at, src] of VO) {
       const end = at + VO_LEN[src];
-      duck = Math.min(duck, interpolate(tt, [at - 0.4, at - 0.05, end + 0.1, end + 0.6], [1, 0.42, 0.42, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
+      duck = Math.min(duck, interpolate(tt, [at - 0.4, at - 0.05, end + 0.1, end + 0.6], [1, 0.32, 0.32, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}));
     }
     return base * duck;
   };
@@ -173,9 +175,16 @@ export const Rebirth: React.FC = () => {
     <AbsoluteFill style={{backgroundColor: '#0d0b08', fontFamily: 'Inter'}}>
       <style>{fontFace}</style>
 
-      {SHOTS.map((sh, i) => (
-        <Sequence key={i} from={s(sh.from)} durationInFrames={s(sh.to - sh.from)}><Shot shot={sh} /></Sequence>
-      ))}
+      {SHOTS.map((sh, i) => {
+        const prevJoined = i > 0 && Math.abs(SHOTS[i - 1].to - sh.from) < 1e-6;
+        const nextJoined = i < SHOTS.length - 1 && Math.abs(SHOTS[i + 1].from - sh.to) < 1e-6;
+        const lead = prevJoined ? XF : 0;
+        return (
+          <Sequence key={i} from={s(sh.from - lead)} durationInFrames={s(sh.to - sh.from + lead)}>
+            <Shot shot={sh} lead={lead} tailFade={!nextJoined} />
+          </Sequence>
+        );
+      })}
       {CARDS.map(([a, b], i) => (
         <Sequence key={'c' + i} from={s(a)} durationInFrames={s(b - a)}><Card dur={b - a} /></Sequence>
       ))}
@@ -241,8 +250,8 @@ export const Rebirth: React.FC = () => {
       <Sequence from={s(64)} durationInFrames={s(TOTAL - 64)}>
         <GoldLines start={0.3} />
         <AbsoluteFill style={{alignItems: 'center'}}>
-          <Up t0={1.0}><Img src={staticFile('img/logo.png')} style={{width: 300, marginTop: 250}} /></Up>
-          <Up t0={2.0}><div style={{fontFamily: 'Inter', fontWeight: 600, fontSize: 116, letterSpacing: `${0.5 - 0.12 * prog(frame / fps - 64, 2, 3.6)}em`, paddingLeft: '0.4em', color: GOLD, marginTop: 40}}>REBIRTH</div></Up>
+          <Up t0={0.5}><Img src={staticFile('img/logo.png')} style={{width: 300, marginTop: 250}} /></Up>
+          <Up t0={1.4}><div style={{fontFamily: 'Inter', fontWeight: 600, fontSize: 116, letterSpacing: `${0.5 - 0.12 * prog(frame / fps - 64, 2, 3.6)}em`, paddingLeft: '0.4em', color: GOLD, marginTop: 40}}>REBIRTH</div></Up>
         </AbsoluteFill>
       </Sequence>
 
