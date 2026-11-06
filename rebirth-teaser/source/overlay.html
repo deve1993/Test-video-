@@ -26,12 +26,13 @@ html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hi
 /* corner logo */
 #corner{right:56px;bottom:46px;width:58px;opacity:.9}
 /* end card */
-#card{inset:0;background:var(--bg)}
+#card{inset:0;background:radial-gradient(ellipse 75% 70% at 50% 45%,#FCF9F1 0%,#F4ECDA 60%,#E9DCBF 100%)}
 #lines{inset:0}
-#crown{left:50%;top:300px;width:300px;transform:translateX(-50%)}
-#word{left:0;right:0;top:600px;text-align:center;font-weight:300;font-size:64px;letter-spacing:.55em;padding-left:.55em;color:var(--gold)}
-#tag{left:0;right:0;top:712px;text-align:center;font-size:26px;letter-spacing:.5em;padding-left:.5em;color:#5C4710}
-#tagrule{left:50%;top:690px;height:1px;width:420px;margin-left:-210px;background:linear-gradient(90deg,rgba(176,141,46,0),var(--gold2),rgba(176,141,46,0))}
+#crown{left:50%;top:215px;width:280px;transform:translateX(-50%)}
+#word{left:0;right:0;top:500px;text-align:center;font-weight:600;font-size:104px;letter-spacing:.38em;padding-left:.38em;color:var(--gold)}
+#tag{left:0;right:0;top:690px;text-align:center;font-size:50px;font-weight:500;letter-spacing:.2em;padding-left:.2em;color:#3A2C0C}
+#tag2{left:0;right:0;top:795px;text-align:center;font-size:22px;font-weight:700;letter-spacing:.5em;padding-left:.5em;color:var(--gold)}
+#tagrule{left:50%;top:662px;height:2px;width:560px;margin-left:-280px;background:linear-gradient(90deg,rgba(176,141,46,0),var(--gold2),rgba(176,141,46,0))}
 </style></head>
 <body>
 <div id="scr1" class="abs"></div><div id="scr2" class="abs"></div>
@@ -54,6 +55,7 @@ html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hi
 <div id="tagrule" class="abs"></div>
 <div id="word" class="abs sans">REBIRTH</div>
 <div id="tag" class="abs serif">DALLA PROPRIETÀ ALL’USO</div>
+<div id="tag2" class="abs sans">NOLEGGIO A LUNGO TERMINE</div>
 <script>
 const $=id=>document.getElementById(id);
 const clamp=(x)=>Math.max(0,Math.min(1,x));
@@ -82,12 +84,12 @@ window.render=(t)=>{
   $('src').style.opacity=win(t,6.2,7.0,8.9,9.5);
   $('corner').style.opacity=0.9*win(t,0.3,1.2,9.0,9.5);
   // end card (9.4-15s)
-  $('card').style.opacity=io(t,9.3,10.0);
-  [...svg.children].forEach((p,i)=>{const d=io(t,9.9+i*0.12,11.4+i*0.12);p.setAttribute('stroke-dashoffset',p.dataset.len*(1-d));p.style.opacity=0.55*io(t,9.9,10.2);});
-  const c=io(t,10.4,11.6); $('crown').style.opacity=c; $('crown').style.transform=`translateX(-50%) scale(${0.94+0.06*c})`;
-  $('word').style.opacity=io(t,11.0,12.0); $('word').style.letterSpacing=(0.75-0.2*io(t,11.0,12.4))+'em';
-  $('tagrule').style.opacity=io(t,11.9,12.6); $('tagrule').style.transform=`scaleX(${io(t,11.9,12.9)})`;
-  $('tag').style.opacity=io(t,12.1,13.0);
+  $('card').style.opacity=io(t,9.2,9.8);
+  [...svg.children].forEach((p,i)=>{const d=io(t,9.6+i*0.1,10.9+i*0.1);p.setAttribute('stroke-dashoffset',p.dataset.len*(1-d));p.style.opacity=0.85*io(t,9.6,9.9);});
+  const c=io(t,9.8,10.6); $('crown').style.opacity=c; $('crown').style.transform=`translateX(-50%) scale(${0.94+0.06*c})`;
+  $('word').style.opacity=io(t,10.3,11.0); $('word').style.letterSpacing=(0.52-0.14*io(t,10.3,11.4))+'em';
+  $('tagrule').style.opacity=io(t,11.2,11.7); $('tagrule').style.transform=`scaleX(${io(t,11.2,12.2)})`;
+  $('tag').style.opacity=io(t,11.4,12.1); $('tag').style.transform=`translateY(${(1-io(t,11.4,12.3))*16}px)`; $('tag2').style.opacity=io(t,12.4,13.1);
 };
 render(0);
 </script>
