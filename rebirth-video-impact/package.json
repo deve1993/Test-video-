@@ -1,0 +1,19 @@
+{
+  "name": "rebirth-video-impact",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render src/index.ts Rebirth out/REBIRTH_video_impact.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.538",
+    "@remotion/media-utils": "4.0.538",
+    "remotion": "4.0.538",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "@types/react": "19.1.8"
+  }
+}
