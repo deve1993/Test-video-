@@ -78,9 +78,9 @@ const Shot: React.FC<{shot: Shot; lead: number; span: number; tailFade: boolean}
   );
 };
 
-const Card: React.FC<{dur: number; fadeOut: boolean}> = ({dur, fadeOut}) => {
+const Card: React.FC<{dur: number; fadeOut: boolean; fadeIn: boolean}> = ({dur, fadeOut, fadeIn}) => {
   const t = useCurrentFrame() / FPS;
-  const a = Math.min(prog(t, 0, 0.6), fadeOut ? 1 - prog(t, dur - 0.6, dur) : 1);
+  const a = Math.min(fadeIn ? prog(t, 0, 0.6) : 1, fadeOut ? 1 - prog(t, dur - 0.6, dur) : 1);
   return <AbsoluteFill style={{opacity: a, background: 'radial-gradient(ellipse 80% 75% at 50% 45%, #FCF9F2 0%, #F5EEDF 62%, #EBDFC4 100%)'}} />;
 };
 
@@ -189,7 +189,7 @@ export const Rebirth: React.FC = () => {
         );
       })}
       {CARDS.map(([a, b], i) => (
-        <Sequence key={'c' + i} from={s(a)} durationInFrames={s(b - a)}><Card dur={b - a} fadeOut={SHOTS.some((sh) => Math.abs(sh.from - b) < 1e-6)} /></Sequence>
+        <Sequence key={'c' + i} from={s(a)} durationInFrames={s(b - a)}><Card dur={b - a} fadeOut={SHOTS.some((sh) => Math.abs(sh.from - b) < 1e-6)} fadeIn={!CARDS.some(([, e]) => Math.abs(e - a) < 1e-6)} /></Sequence>
       ))}
 
       {/* 1 · incipit (the teaser opening) */}
