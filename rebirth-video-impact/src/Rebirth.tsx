@@ -54,9 +54,9 @@ const VO: [number, string][] = [
 
 // ---------------------------------------------------------------- pieces
 const XF = 0.4; // crossfade length between contiguous shots (s)
-const Shot: React.FC<{shot: Shot; lead: number; tailFade: boolean}> = ({shot, lead, tailFade}) => {
+const Shot: React.FC<{shot: Shot; lead: number; span: number; tailFade: boolean}> = ({shot, lead, span, tailFade}) => {
   const f = useCurrentFrame();
-  const dur = shot.to - shot.from + lead;
+  const dur = span;
   const usable = CLIP_LEN - (shot.offset ?? 0) - 0.05;
   const rate = Math.min(1, usable / dur); // slow down only when the clip is shorter than the slot
   const t = f / FPS;
@@ -78,9 +78,9 @@ const Shot: React.FC<{shot: Shot; lead: number; tailFade: boolean}> = ({shot, le
   );
 };
 
-const Card: React.FC<{dur: number}> = ({dur}) => {
+const Card: React.FC<{dur: number; fadeOut: boolean}> = ({dur, fadeOut}) => {
   const t = useCurrentFrame() / FPS;
-  const a = Math.min(prog(t, 0, 0.6), dur > 9 ? 1 : 1 - prog(t, dur - 0.5, dur));
+  const a = Math.min(prog(t, 0, 0.6), fadeOut ? 1 - prog(t, dur - 0.6, dur) : 1);
   return <AbsoluteFill style={{opacity: a, background: 'radial-gradient(ellipse 80% 75% at 50% 45%, #FCF9F2 0%, #F5EEDF 62%, #EBDFC4 100%)'}} />;
 };
 
@@ -162,7 +162,7 @@ export const Rebirth: React.FC = () => {
   const VO_LEN: Record<string, number> = {'audio/vo1.mp3': 2.8, 'audio/vo2.mp3': 6.35, 'audio/vo3.mp3': 6.45, 'audio/vo4.mp3': 2.95, 'audio/vo5.mp3': 8.45, 'audio/vo6.mp3': 3.65, 'audio/vo8.mp3': 1.15};
   const musicVolume = (f: number) => {
     const tt = f / fps;
-    const base = interpolate(tt, [0, 1.2, TOTAL - 4.5, TOTAL - 0.2], [0, 1, 1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+    const base = interpolate(tt, [0, 1.2, TOTAL - 4.5, TOTAL - 0.2], [0, 0.85, 0.85, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
     let duck = 1;
     for (const [at, src] of VO) {
       const end = at + VO_LEN[src];
@@ -176,17 +176,20 @@ export const Rebirth: React.FC = () => {
       <style>{fontFace}</style>
 
       {SHOTS.map((sh, i) => {
-        const prevJoined = i > 0 && Math.abs(SHOTS[i - 1].to - sh.from) < 1e-6;
-        const nextJoined = i < SHOTS.length - 1 && Math.abs(SHOTS[i + 1].from - sh.to) < 1e-6;
-        const lead = prevJoined ? XF : 0;
+        const prevShot = i > 0 && Math.abs(SHOTS[i - 1].to - sh.from) < 1e-6;
+        const nextShot = i < SHOTS.length - 1 && Math.abs(SHOTS[i + 1].from - sh.to) < 1e-6;
+        const afterCard = CARDS.some(([, b]) => Math.abs(b - sh.from) < 1e-6);
+        const beforeCard = CARDS.some(([a]) => Math.abs(a - sh.to) < 1e-6);
+        const lead = prevShot ? XF : afterCard ? 0.6 : 0;
+        const tail = beforeCard ? 0.7 : 0; // keep the shot underneath while the ivory card fades in
         return (
-          <Sequence key={i} from={s(sh.from - lead)} durationInFrames={s(sh.to - sh.from + lead)}>
-            <Shot shot={sh} lead={lead} tailFade={!nextJoined} />
+          <Sequence key={i} from={s(sh.from - lead)} durationInFrames={s(sh.to - sh.from + lead + tail)}>
+            <Shot shot={sh} lead={afterCard ? 0.01 : lead} span={sh.to - sh.from + lead + tail} tailFade={!(nextShot || beforeCard)} />
           </Sequence>
         );
       })}
       {CARDS.map(([a, b], i) => (
-        <Sequence key={'c' + i} from={s(a)} durationInFrames={s(b - a)}><Card dur={b - a} /></Sequence>
+        <Sequence key={'c' + i} from={s(a)} durationInFrames={s(b - a)}><Card dur={b - a} fadeOut={SHOTS.some((sh) => Math.abs(sh.from - b) < 1e-6)} /></Sequence>
       ))}
 
       {/* 1 · incipit (the teaser opening) */}
@@ -258,7 +261,7 @@ export const Rebirth: React.FC = () => {
       <MiniLogo />
 
       {/* audio */}
-      <Audio src={staticFile('audio/music.mp3')} volume={musicVolume} />
+      <Audio src={staticFile('audio/music_master.mp3')} volume={musicVolume} />
       {VO.map(([at, src]) => (
         <Sequence key={src} from={s(at)}><Audio src={staticFile(src)} volume={1} /></Sequence>
       ))}
