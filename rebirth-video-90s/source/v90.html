@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"Bodoni";src:url("assets/bodoni400.woff2") format("woff2");font-weight:400 900;}
+:root{--gold:#8B6B14;--gold2:#B08D2E;--ink:#2B2416;--ink2:#6B6150;--bg:#F7F5F1;}
+html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+*{box-sizing:border-box}
+body{font-family:"Inter",sans-serif}
+.abs{position:absolute}
+.serif{font-family:"Bodoni",serif}
+#bg{inset:0;background:radial-gradient(ellipse 85% 80% at 42% 45%,#FBFAF7 0%,#F7F5F1 55%,#EFEAE0 100%)}
+.scene{inset:0;opacity:0}
+/* typography from the prompt: titles sans bold gold, subtitles serif uppercase widely spaced, numbers sans light */
+.sub{font-family:"Bodoni",serif;text-transform:uppercase;letter-spacing:.42em;font-size:24px;color:#7A5E12}
+.ttl{font-weight:700;font-size:52px;color:var(--gold)}
+.num{font-weight:200;color:var(--gold);line-height:1;letter-spacing:-.01em}
+.lab{font-family:"Bodoni",serif;text-transform:uppercase;letter-spacing:.3em;font-size:19px;color:#6E5410;margin-top:18px}
+.cap{font-size:15px;letter-spacing:.22em;font-weight:600;color:rgba(110,84,16,.7)}
+.ico{stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#mini{right:58px;bottom:48px;width:54px}
+</style></head>
+<body>
+<div id="bg" class="abs"></div>
+<svg id="lines" class="abs" width="1920" height="1080" style="left:0;top:0"></svg>
+
+<!-- 1 · APERTURA 0–6 -->
+<div class="scene abs" data-s="0" data-e="6">
+  <img id="crown" class="abs" src="assets/logo.png" style="left:50%;top:250px;width:250px;transform:translateX(-50%)">
+  <div id="word" class="abs" style="left:0;right:0;top:520px;text-align:center;font-weight:600;font-size:96px;letter-spacing:.4em;padding-left:.4em;color:var(--gold)">REBIRTH</div>
+  <div class="abs sub a" data-t="2.7" style="left:0;right:0;top:690px;text-align:center;padding-left:.42em">Il modo di vivere l’auto sta cambiando</div>
+</div>
+
+<!-- 2 · IL MERCATO 6–25 -->
+<div class="scene abs" data-s="6" data-e="25">
+  <div class="abs ttl a" data-t="6.4" style="left:140px;top:120px">Il mercato</div>
+  <div class="abs sub a" data-t="6.7" style="left:142px;top:200px">Noleggio a lungo termine · Italia 2025</div>
+  <div class="abs" style="left:140px;top:330px;display:grid;grid-template-columns:repeat(3,560px);row-gap:84px">
+    <div class="a" data-t="7.6"><div class="num" style="font-size:150px"><span data-count="13" data-t="7.8" data-d="5.2">13</span><span style="font-size:64px;font-weight:300;margin-left:10px">MLD €</span></div><div class="lab">Fatturato NLT</div></div>
+    <div class="a" data-t="15.2"><div class="num" style="font-size:150px">1<span style="font-size:64px;font-weight:300;margin-left:14px">su 4</span></div><div class="lab">Auto nuove a noleggio</div></div>
+    <div class="a" data-t="17.4"><div class="num" style="font-size:150px"><span data-count="1.3" data-dec="1" data-t="17.4">1,3</span><span style="font-size:64px;font-weight:300;margin-left:10px">MLN</span></div><div class="lab">Veicoli in flotta</div></div>
+    <div class="a" data-t="19.4"><div class="num" style="font-size:118px"><span data-count="411660" data-t="19.4">411.660</span></div><div class="lab">Immatricolazioni · +10%</div></div>
+    <div class="a" data-t="21.4"><div class="num" style="font-size:118px"><span data-count="185000" data-t="21.4">185.000</span></div><div class="lab">Clienti privati</div></div>
+  </div>
+  <div class="abs cap a" data-t="8.2" style="left:142px;bottom:58px">FONTE: 25° RAPPORTO ANIASA</div>
+</div>
+
+<!-- 3 · CRESCITA 25–35 -->
+<div class="scene abs" data-s="25" data-e="35">
+  <div class="abs ttl a" data-t="25.4" style="left:140px;top:120px">Crescita strutturale</div>
+  <div class="abs sub a" data-t="25.7" style="left:142px;top:200px">2022 → 2025</div>
+  <svg class="abs" style="left:140px;top:330px" width="980" height="560" viewBox="0 0 980 560">
+    <line x1="0" y1="540" x2="960" y2="540" stroke="rgba(139,107,20,.3)" stroke-width="1.2"/>
+    <path id="curve" d="M10 500 C 200 470, 320 420, 460 340 S 760 160, 950 60" fill="none" stroke="#B08D2E" stroke-width="3"/>
+    <path id="area" d="M10 500 C 200 470, 320 420, 460 340 S 760 160, 950 60 L 950 540 L 10 540 Z" fill="url(#g1)"/>
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B08D2E" stop-opacity=".22"/><stop offset="1" stop-color="#B08D2E" stop-opacity="0"/></linearGradient></defs>
+    <circle id="dot" cx="950" cy="60" r="8" fill="#8B6B14"/>
+    <g font-family="Bodoni" font-size="20" fill="#6E5410" letter-spacing="4"><text x="10" y="530">2022</text><text x="890" y="530">2025</text></g>
+  </svg>
+  <div class="abs" style="left:1200px;top:340px;display:flex;flex-direction:column;gap:60px">
+    <div class="a" data-t="27.4"><div class="num" style="font-size:110px">+31%</div><div class="lab">Fatturato settore · 3 anni</div></div>
+    <div class="a" data-t="29.4"><div class="num" style="font-size:110px">+17%</div><div class="lab">Flotta NLT dal 2022</div></div>
+    <div class="a" data-t="31.4"><div class="num" style="font-size:110px">×4</div><div class="lab">Rinnovo del parco</div></div>
+  </div>
+  <div class="abs cap a" data-t="26" style="left:142px;bottom:58px">FONTE: ANIASA · SERIE STORICA</div>
+</div>
+
+<!-- 4 · IL POTENZIALE 35–52 -->
+<div class="scene abs" data-s="35" data-e="45.8">
+  <div class="abs ttl a" data-t="35.4" style="left:140px;top:120px">Il potenziale</div>
+  <div class="abs sub a" data-t="35.7" style="left:142px;top:200px">Un mercato ancora da conquistare</div>
+  <div id="cars" class="abs" style="left:140px;top:330px;width:1000px;display:grid;grid-template-columns:repeat(20,1fr);gap:16px 10px"></div>
+  <div class="abs" style="left:1260px;top:320px;width:560px">
+    <div class="a" data-t="36.4"><div class="num" style="font-size:96px">41,3<span style="font-size:48px;font-weight:300;margin-left:10px">MLN</span></div><div class="lab">Auto circolanti</div></div>
+    <div class="a" data-t="39.4" style="margin-top:70px;border-top:1.5px solid #B08D2E;padding-top:40px"><div class="num" style="font-size:200px">&lt; 1%</div><div class="lab">Privati a noleggio</div></div>
+  </div>
+  <div class="abs cap a" data-t="36" style="left:142px;bottom:58px">FONTI: ISTAT · ACI · 25° RAPPORTO ANIASA</div>
+</div>
+<div class="scene abs" data-s="45.8" data-e="52">
+  <div class="abs" style="left:0;right:0;top:300px;text-align:center;display:flex;flex-direction:column;gap:46px">
+    <div class="sub a" data-t="46.2" style="font-size:40px;color:var(--ink);padding-left:.42em">Mercato in crescita</div>
+    <div class="sub a" data-t="47.5" style="font-size:40px;color:var(--ink);padding-left:.42em">Ricambio del parco</div>
+    <div class="sub a" data-t="48.8" style="font-size:40px;color:var(--ink);padding-left:.42em">Dall’avere all’usare</div>
+    <div class="sub a" data-t="50.1" style="font-size:40px;color:var(--gold);padding-left:.42em">Incertezza tecnologica</div>
+  </div>
+</div>
+
+<!-- 5 · IL PRODOTTO 52–68 -->
+<div class="scene abs" data-s="52" data-e="68">
+  <div class="abs ttl a" data-t="52.4" style="left:140px;top:120px">Il prodotto</div>
+  <div class="abs sub a" data-t="55.2" style="left:142px;top:200px">Un canone mensile fisso</div>
+  <div class="abs a" data-t="52.6" style="left:460px;top:300px;width:1000px;height:560px;overflow:hidden">
+    <img id="car" src="assets/car1_cut.png" style="width:1000px;display:block">
+  </div>
+  <svg class="abs" width="1920" height="1080" style="left:0;top:0">
+    <g stroke="#B08D2E" stroke-width="1.2" fill="none" opacity=".6">
+      <path class="conn" data-t="57.1" d="M330 430 L 600 470"/><path class="conn" data-t="57.6" d="M330 790 L 620 700"/>
+      <path class="conn" data-t="58.1" d="M1590 430 L 1320 470"/><path class="conn" data-t="58.6" d="M1590 790 L 1300 700"/>
+    </g>
+  </svg>
+  <div class="abs a" data-t="57.1" style="left:150px;top:370px;width:240px;text-align:center"><svg class="ico" width="84" height="84" viewBox="0 0 48 48"><path d="M24 5l15 6v11c0 10-7 17-15 21C16 39 9 32 9 22V11z"/><path d="M17 24l5 5 9-10"/></svg><div class="lab">Assicurazione</div></div>
+  <div class="abs a" data-t="57.6" style="left:150px;top:730px;width:240px;text-align:center"><svg class="ico" width="84" height="84" viewBox="0 0 48 48"><path d="M30 6a9 9 0 0 0-8 12L7 33a4 4 0 0 0 6 6l15-15a9 9 0 0 0 12-8l-5 5-5-1-1-5z"/></svg><div class="lab">Manutenzione</div></div>
+  <div class="abs a" data-t="58.1" style="left:1530px;top:370px;width:240px;text-align:center"><svg class="ico" width="84" height="84" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="7"/><path d="M11 11l8 8M37 11l-8 8M11 37l8-8M37 37l-8-8"/></svg><div class="lab">Assistenza</div></div>
+  <div class="abs a" data-t="58.6" style="left:1530px;top:730px;width:240px;text-align:center"><svg class="ico" width="84" height="84" viewBox="0 0 48 48"><rect x="8" y="8" width="13" height="13" rx="2"/><rect x="27" y="8" width="13" height="13" rx="2"/><rect x="8" y="27" width="13" height="13" rx="2"/><path d="M33.5 27v13M27 33.5h13"/></svg><div class="lab">Servizi</div></div>
+</div>
+
+<!-- 6 · PERCHÉ SI SCEGLIE 68–78 -->
+<div class="scene abs" data-s="68" data-e="78">
+  <div class="abs sub a" data-t="68.4" style="left:0;right:0;top:300px;text-align:center;padding-left:.42em">Perché si sceglie</div>
+  <div class="abs serif a" data-t="68.9" style="left:0;right:0;top:400px;text-align:center;font-size:82px;color:var(--ink)">Non si compra più l’auto.</div>
+  <div class="abs serif a" data-t="70.4" style="left:0;right:0;top:520px;text-align:center;font-size:82px;color:var(--gold)">Si compra mobilità senza pensieri.</div>
+  <div class="abs a" data-t="72.4" style="left:50%;top:690px;width:300px;margin-left:-150px;height:1.5px;background:linear-gradient(90deg,transparent,#B08D2E,transparent)"></div>
+  <div class="abs sub a" data-t="72.6" style="left:0;right:0;top:730px;text-align:center;padding-left:.42em">Dalla proprietà all’uso</div>
+</div>
+
+<!-- 7 · FISCALITÀ 78–86 -->
+<div class="scene abs" data-s="78" data-e="86">
+  <div class="abs ttl a" data-t="78.3" style="left:140px;top:120px">Fiscalità</div>
+  <div class="abs sub a" data-t="78.6" style="left:142px;top:200px">Vantaggi per ogni profilo</div>
+  <div class="abs" style="left:240px;right:240px;top:360px;display:flex;justify-content:space-between;text-align:center">
+    <div class="a" data-t="78.9" style="width:380px"><div style="position:relative;display:inline-block"><svg class="ico" width="130" height="130" viewBox="0 0 48 48"><circle cx="24" cy="16" r="8"/><path d="M8 42c0-9 7-15 16-15s16 6 16 15"/></svg><svg class="abs tick" data-t="79.6" width="54" height="54" viewBox="0 0 48 48" style="right:-18px;bottom:-6px"><circle cx="24" cy="24" r="22" fill="#8B6B14"/><path d="M14 25l7 7 13-15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="lab" style="font-size:24px;margin-top:30px">Privato</div><div style="font-size:24px;color:var(--ink2);margin-top:10px">Costi certi, zero anticipo</div></div>
+    <div class="a" data-t="79.5" style="width:380px"><div style="position:relative;display:inline-block"><svg class="ico" width="130" height="130" viewBox="0 0 48 48"><rect x="6" y="15" width="36" height="25" rx="3"/><path d="M17 15v-4a3 3 0 0 1 3-3h8a3 3 0 0 1 3 3v4M6 26h36"/></svg><svg class="abs tick" data-t="80.2" width="54" height="54" viewBox="0 0 48 48" style="right:-18px;bottom:-6px"><circle cx="24" cy="24" r="22" fill="#8B6B14"/><path d="M14 25l7 7 13-15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="lab" style="font-size:24px;margin-top:30px">Professionista</div><div style="font-size:24px;color:var(--ink2);margin-top:10px">Costi deducibili, IVA detraibile</div></div>
+    <div class="a" data-t="80.1" style="width:380px"><div style="position:relative;display:inline-block"><svg class="ico" width="130" height="130" viewBox="0 0 48 48"><path d="M8 42V12l14-6v36M22 42V18l18 6v18M4 42h40"/><path d="M13 18h4M13 25h4M13 32h4M28 28h4M28 35h4"/></svg><svg class="abs tick" data-t="80.8" width="54" height="54" viewBox="0 0 48 48" style="right:-18px;bottom:-6px"><circle cx="24" cy="24" r="22" fill="#8B6B14"/><path d="M14 25l7 7 13-15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="lab" style="font-size:24px;margin-top:30px">Azienda</div><div style="font-size:24px;color:var(--ink2);margin-top:10px">Deducibilità fino al 100%</div></div>
+  </div>
+  <div class="abs cap a" data-t="81" style="left:142px;bottom:58px">SECONDO IL PROFILO FISCALE · ART. 164 TUIR</div>
+</div>
+
+<!-- 8 · CHIUSURA 86–93 -->
+<div class="scene abs" data-s="86" data-e="94">
+  <img id="crown2" class="abs" src="assets/logo.png" style="left:50%;top:230px;width:250px;transform:translateX(-50%)">
+  <div id="word2" class="abs" style="left:0;right:0;top:500px;text-align:center;font-weight:600;font-size:96px;letter-spacing:.4em;padding-left:.4em;color:var(--gold)">REBIRTH</div>
+  <div id="rule2" class="abs" style="left:50%;top:650px;width:520px;margin-left:-260px;height:1.5px;background:linear-gradient(90deg,transparent,#B08D2E,transparent)"></div>
+  <div class="abs sub a" data-t="88.0" style="left:0;right:0;top:690px;text-align:center;font-size:30px;padding-left:.42em;color:var(--ink)">Per entrare nel mercato serve tutto questo</div>
+</div>
+
+<img id="mini" class="abs" src="assets/logo.png">
+<script>
+const $=id=>document.getElementById(id);
+const clamp=x=>Math.max(0,Math.min(1,x));
+const ease=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const io=(t,a,b)=>ease((t-a)/(b-a));
+const scenes=[...document.querySelectorAll('.scene')].map(el=>({el,s:+el.dataset.s,e:+el.dataset.e}));
+const fmt=(v,dec)=>{let [i,f]=v.toFixed(dec).split('.');i=i.replace(/\B(?=(\d{3})+(?!\d))/g,'.');return f?i+','+f:i;};
+// recurring diagonal gold lines, entering slowly from the right and crossing
+const L=[[1920,90,1060,1080],[1920,380,1330,1080],[1600,0,1920,470],[1340,0,1920,780],[1920,0,880,1080],[1920,650,1560,1080]];
+L.forEach((l,i)=>{const p=document.createElementNS('http://www.w3.org/2000/svg','line');p.setAttribute('x1',l[0]);p.setAttribute('y1',l[1]);p.setAttribute('x2',l[2]);p.setAttribute('y2',l[3]);
+  p.setAttribute('stroke',i%2?'#B08D2E':'#C9AE63');p.setAttribute('stroke-width',i==4?1:1.4);const len=Math.hypot(l[2]-l[0],l[3]-l[1]);p.dataset.len=len;p.setAttribute('stroke-dasharray',len);$('lines').appendChild(p);});
+// stylised cars grid: 200 grey cars, one lights up in gold
+const car='<svg viewBox="0 0 40 18" width="40" height="18"><path d="M3 13h34v-3l-5-2-5-5H13L8 8 3 9z" fill="currentColor"/><circle cx="11" cy="14" r="3" fill="currentColor"/><circle cx="29" cy="14" r="3" fill="currentColor"/></svg>';
+for(let i=0;i<200;i++){const d=document.createElement('div');d.innerHTML=car;d.style.color='#CFCAC0';d.className='cg';d.dataset.i=i;$('cars').appendChild(d);}
+window.render=(t)=>{
+  // lines: draw in 0.2-2.6, slow drift, retract 85.2-86.0, redraw 86.2-88.4
+  [...$('lines').children].forEach((p,i)=>{let d;
+    if(t<85.2) d=io(t,0.2+i*0.18,2.2+i*0.18); else if(t<86.1) d=1-io(t,85.2,86.0); else d=io(t,86.2+i*0.14,88+i*0.14);
+    p.setAttribute('stroke-dashoffset',p.dataset.len*(1-d));p.style.opacity=.55;});
+  $('lines').style.transform=`translateX(${Math.sin(t/14)*14}px)`;
+  scenes.forEach(sc=>{const a=Math.min(io(t,sc.s,sc.s+0.6),1-io(t,sc.e-0.6,sc.e));sc.el.style.opacity=a;sc.el.style.display=a>0.001?'block':'none';if(a<=0.001)return;
+    sc.el.querySelectorAll('.a').forEach(el=>{const T=+el.dataset.t;const k=io(t,T,T+0.9);el.style.opacity=k;el.style.transform=`translateY(${(1-k)*18}px)`;});});
+  document.querySelectorAll('[data-count]').forEach(el=>{const T=+el.dataset.t,dd=+(el.dataset.d||1.8);el.textContent=fmt(+el.dataset.count*io(t,T,T+dd),+(el.dataset.dec||0));});
+  // opening logo
+  const c=io(t,0.9,2.2);$('crown').style.opacity=c;$('crown').style.transform=`translateX(-50%) scale(${0.95+0.05*c})`;
+  $('word').style.opacity=io(t,1.5,2.6);$('word').style.letterSpacing=(0.55-0.15*io(t,1.5,3))+'em';
+  // growth chart
+  const cl=1150,k=io(t,25.6,29.6);const cv=$('curve');cv.setAttribute('stroke-dasharray',cl);cv.setAttribute('stroke-dashoffset',cl*(1-k));
+  $('area').style.opacity=io(t,27,30);$('dot').style.opacity=io(t,29.2,29.8);
+  // cars grid
+  document.querySelectorAll('.cg').forEach(el=>{const i=+el.dataset.i;el.style.opacity=io(t,35.6+(i%20)*0.03+Math.floor(i/20)*0.08,36.4+(i%20)*0.03+Math.floor(i/20)*0.08);
+    if(i==87){const g=io(t,39.4,40.2);el.style.color=g>0?`rgb(${207-68*g},${202-95*g},${192-172*g})`:'#CFCAC0';el.style.filter=`drop-shadow(0 0 ${10*g}px rgba(176,141,46,.8))`;}});
+  // product car slow push
+  $('car').style.transform=`scale(${1+0.05*clamp((t-52)/16)})`;
+  document.querySelectorAll('.conn').forEach(p=>{const T=+p.dataset.t;p.setAttribute('stroke-dasharray',400);p.setAttribute('stroke-dashoffset',400*(1-io(t,T,T+0.8)));});
+  document.querySelectorAll('.tick').forEach(el=>{const T=+el.dataset.t,g=io(t,T,T+0.5);el.style.opacity=g;el.style.transform=`scale(${0.6+0.4*g})`;});
+  // closing
+  const c2=io(t,86.4,87.6);$('crown2').style.opacity=c2;$('crown2').style.transform=`translateX(-50%) scale(${0.95+0.05*c2})`;
+  $('word2').style.opacity=io(t,87.0,88.0);$('word2').style.letterSpacing=(0.55-0.15*io(t,87,88.6))+'em';
+  $('rule2').style.opacity=io(t,87.6,88.4);$('rule2').style.transform=`scaleX(${io(t,87.6,88.8)})`;
+  // small logo bottom-right in scenes 2-7
+  $('mini').style.opacity=0.85*Math.min(io(t,6,6.8),1-io(t,85.2,86));
+};
+render(0);
+</script>
+</body></html>
